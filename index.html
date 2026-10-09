@@ -84,7 +84,7 @@ main,#dock,#bar{position:relative;z-index:1}
 .track::-webkit-scrollbar{display:none}
 .card{flex:0 0 76%;scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .slot{aspect-ratio:4/5;background:linear-gradient(160deg,#1b1b1e,#101012);display:flex;align-items:center;justify-content:center;color:#4a4a50;font-size:12px;position:relative}
-.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .card div.t{padding:16px}
 .card h3{font-family:var(--serif);font-weight:500;font-size:19px}
 .card p{font-size:13px;margin-top:4px}
@@ -182,20 +182,30 @@ main,#dock,#bar{position:relative;z-index:1}
 <section id="projects">
   <h2 class="reveal">Commercial projects won</h2>
   <div class="track" id="track">
-    <!-- PROJECT IMAGES: create a folder named "images" next to index.html and add one .jpg per project with EXACTLY these names (any of .jpg .jpeg .png .webp works):
-         images/bellatrix-aerospace.jpg
-         images/wipro-electronics.jpg
-         images/sumadhura.jpg
-         images/elite-matrimony.jpg
-         images/66-degree-international.jpg
-         images/vigna-solutions.jpg
-       They load automatically. No code change needed. -->
-    <div class="card"><div class="slot" data-slot="bellatrix-aerospace">Bellatrix</div><div class="t"><h3>Bellatrix Aerospace</h3><p>Four-floor corporate office, 47,500 sq ft, Bengaluru.</p></div></div>
-    <div class="card"><div class="slot" data-slot="wipro-electronics">Wipro Electronics</div><div class="t"><h3>Wipro Electronics</h3><p>Commercial office interior.</p></div></div>
-    <div class="card"><div class="slot" data-slot="sumadhura">Sumadhura</div><div class="t"><h3>Sumadhura</h3><p>Commercial interior, 18,000 sq ft.</p></div></div>
-    <div class="card"><div class="slot" data-slot="elite-matrimony">Elite Matrimony</div><div class="t"><h3>Elite Matrimony</h3><p>Commercial office interior, 3,750 sq ft.</p></div></div>
-    <div class="card"><div class="slot" data-slot="66-degree-international">66 Degree International</div><div class="t"><h3>66 Degree International</h3><p>Commercial office interior, 3,500 sq ft.</p></div></div>
-    <div class="card"><div class="slot" data-slot="vigna-solutions">Vigna Solutions</div><div class="t"><h3>Vigna Solutions</h3><p>Commercial office interior, 2,353 sq ft.</p></div></div>
+    <div class="card">
+      <div class="slot"><img src="images/bellatrix-aerospace.jpeg" alt="Bellatrix Aerospace" loading="lazy"></div>
+      <div class="t"><h3>Bellatrix Aerospace</h3><p>Four-floor corporate office, 47,500 sq ft, Bengaluru.</p></div>
+    </div>
+    <div class="card">
+      <div class="slot"><img src="images/wipro-electronics.jpeg" alt="Wipro Electronics" loading="lazy"></div>
+      <div class="t"><h3>Wipro Electronics</h3><p>Commercial office interior.</p></div>
+    </div>
+    <div class="card">
+      <div class="slot"><img src="images/sumadhura.jpeg" alt="Sumadhura" loading="lazy"></div>
+      <div class="t"><h3>Sumadhura</h3><p>Commercial interior, 18,000 sq ft.</p></div>
+    </div>
+    <div class="card">
+      <div class="slot"><img src="images/elite-matrimony.png" alt="Elite Matrimony" loading="lazy"></div>
+      <div class="t"><h3>Elite Matrimony</h3><p>Commercial office interior, 3,750 sq ft.</p></div>
+    </div>
+    <div class="card">
+      <div class="slot"><img src="images/66-degree-international.png" alt="66 Degree International" loading="lazy"></div>
+      <div class="t"><h3>66 Degree International</h3><p>Commercial office interior, 3,500 sq ft.</p></div>
+    </div>
+    <div class="card">
+      <div class="slot"><img src="images/vigna-solutions.jpeg" alt="Vigna Solutions" loading="lazy"></div>
+      <div class="t"><h3>Vigna Solutions</h3><p>Commercial office interior, 2,353 sq ft.</p></div>
+    </div>
   </div>
   <div class="hint"><b>&rarr;</b> Swipe to see all six</div>
 </section>
@@ -232,25 +242,11 @@ main,#dock,#bar{position:relative;z-index:1}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-// QR target: leave empty to use this page's own address (works automatically on GitHub Pages).
-// Or paste your live link between the quotes, e.g. "https://yourname.github.io/cv/"
 var LIVE_URL = "";
 
 try{
   if(window.QRCode){ new QRCode(document.getElementById('qr'),{text:LIVE_URL||location.href,width:168,height:168,correctLevel:QRCode.CorrectLevel.M}); }
 }catch(e){}
-
-document.querySelectorAll('.slot[data-slot]').forEach(function(sl){
-  // tries each extension in turn, so .jpg .jpeg .png .webp all work
-  var exts=['jpeg','jpg','png','webp','JPG','JPEG','PNG'],k=0;
-  (function tryNext(){
-    if(k>=exts.length) return;
-    var im=new Image(); im.alt=sl.dataset.slot.replace(/-/g,' ');
-    im.onload=function(){sl.textContent='';sl.appendChild(im)};
-    im.onerror=tryNext;
-    im.src='images/'+sl.dataset.slot+'.'+exts[k++];
-  })();
-});
 
 function buzz(ms){ try{ if(navigator.vibrate) navigator.vibrate(ms); }catch(e){} }
 
