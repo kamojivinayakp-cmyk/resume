@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0b">
+<title>Vinayak Kamoji | Commercial Interior Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0b;--panel:#141416;--line:#26262a;--text:#f2efe9;--mute:#9a968e;--accent:#c9a46a;
+--serif:'Fraunces',Georgia,serif;--sans:'Manrope',system-ui,-apple-system,sans-serif;
+padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg);color:var(--text);font-family:var(--sans);scroll-behavior:smooth}
+body{background:var(--bg)}
+a{color:inherit;text-decoration:none}
+
+/* Desktop gate: shown on large screens with a mouse, app hidden */
+#gate{display:none}
+@media (min-width:820px) and (pointer:fine){
+ #app{display:none}
+ #gate{display:flex;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:40px}
+}
+#gate h1{font-family:var(--serif);font-weight:300;font-size:44px}
+#gate p{color:var(--mute);max-width:340px;line-height:1.6}
+#qr{background:#fff;padding:14px;border-radius:12px;width:196px;height:196px}
+#qr img,#qr canvas{display:block;width:100%!important;height:100%!important}
+
+/* App */
+#bar{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:30}
+main{scroll-snap-type:y proximity}
+section{min-height:100svh;padding:max(72px,env(safe-area-inset-top)) 24px 120px;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center}
+h2{font-family:var(--serif);font-weight:300;font-size:34px;line-height:1.15;margin-bottom:28px}
+p{line-height:1.7;color:var(--mute);font-size:15px}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}
+
+/* Hero: name revealed by a light sweep */
+#hero{position:relative}
+#glow{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+#glow i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;will-change:transform}
+#glow i:nth-child(1){width:360px;height:360px;left:-120px;top:5%;background:radial-gradient(circle,rgba(201,164,106,.55),transparent 70%);animation:o1 14s ease-in-out infinite alternate}
+#glow i:nth-child(2){width:300px;height:300px;right:-130px;top:35%;background:radial-gradient(circle,rgba(230,140,80,.38),transparent 70%);animation:o2 18s ease-in-out infinite alternate}
+#glow i:nth-child(3){width:420px;height:420px;left:10%;bottom:-180px;background:radial-gradient(circle,rgba(120,150,210,.30),transparent 70%);animation:o3 22s ease-in-out infinite alternate}
+#glow i:nth-child(4){width:200px;height:200px;left:55%;top:8%;background:radial-gradient(circle,rgba(255,225,170,.40),transparent 70%);animation:o4 11s ease-in-out infinite alternate}
+@keyframes o1{to{transform:translate(260px,380px) scale(1.3)}}
+@keyframes o2{to{transform:translate(-300px,-260px) scale(.8)}}
+@keyframes o3{to{transform:translate(280px,-320px) scale(1.2)}}
+@keyframes o4{to{transform:translate(-220px,420px) scale(1.5)}}
+main,#dock,#bar{position:relative;z-index:1}
+#dock,#bar{position:fixed}
+#hero h1{position:relative;font-family:var(--serif);font-weight:300;font-size:clamp(54px,17vw,84px);line-height:1;letter-spacing:-.02em}
+#hero h1 span{display:block;opacity:0;transform:translateY(40px);filter:blur(8px);animation:rise 1.4s cubic-bezier(.2,.7,.2,1) forwards}
+#hero h1 span:nth-child(2){animation-delay:.35s}
+@keyframes rise{to{opacity:1;transform:none;filter:none}}
+#hero .role{position:relative;margin-top:26px;font-size:17px;color:var(--text);opacity:0;animation:rise 1.2s .9s forwards}
+#hero .pitch{position:relative;margin-top:12px;max-width:300px;opacity:0;animation:rise 1.2s 1.2s forwards}
+.cue{position:absolute;bottom:110px;left:24px;font-size:13px;color:var(--mute);display:flex;align-items:center;gap:10px;opacity:0;animation:rise 1s 1.8s forwards}
+.cue i{width:1px;height:34px;background:var(--accent);transform-origin:top;animation:drip 2s infinite}
+@keyframes drip{0%{transform:scaleY(0)}60%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* Profile stats */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin-top:34px;border:1px solid var(--line)}
+.stat{background:rgba(10,10,11,.72);padding:22px 18px}
+.stat b{display:block;font-family:var(--serif);font-weight:300;font-size:40px;color:var(--accent)}
+.stat span{font-size:13px;color:var(--mute)}
+
+/* Timeline */
+.tl{position:relative;padding-left:26px;border-left:1px solid var(--line)}
+.job{position:relative;margin-bottom:34px}
+.job::before{content:"";position:absolute;left:-31px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:1px solid var(--accent);transition:.6s}
+.job.in::before{background:var(--accent);box-shadow:0 0 0 6px rgba(201,164,106,.15)}
+.job h3{font-family:var(--serif);font-weight:500;font-size:21px}
+.job .when{font-size:13px;color:var(--accent);margin:4px 0 10px}
+.job li{list-style:none;font-size:14px;color:var(--mute);line-height:1.6;margin-bottom:8px}
+.job li::before{content:"–  ";color:var(--accent)}
+
+/* Projects: horizontal swipe */
+#projects{padding-right:0}
+.track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 24px 8px 0;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.card{flex:0 0 76%;scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.slot{aspect-ratio:4/5;background:linear-gradient(160deg,#1b1b1e,#101012);display:flex;align-items:center;justify-content:center;color:#4a4a50;font-size:12px;position:relative}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card div.t{padding:16px}
+.card h3{font-family:var(--serif);font-weight:500;font-size:19px}
+.card p{font-size:13px;margin-top:4px}
+.hint{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mute);margin-top:16px}
+.hint b{display:inline-block;animation:nudge 1.6s ease-in-out infinite;color:var(--accent);font-weight:400}
+@keyframes nudge{50%{transform:translateX(8px)}}
+
+/* Skills */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{padding:10px 16px;border:1px solid var(--line);border-radius:40px;font-size:14px;background:var(--panel)}
+.sub{margin:28px 0 12px;font-size:14px;color:var(--text)}
+
+/* Education + contact */
+.edu{border-top:1px solid var(--line);padding:16px 0}
+.edu b{font-weight:500;display:block;margin-bottom:2px}
+.edu span{font-size:13px;color:var(--mute)}
+.social{margin-top:26px;display:flex;gap:12px}
+.btn{flex:1;text-align:center;padding:14px;border:1px solid var(--line);border-radius:8px;font-size:14px;background:var(--panel)}
+
+/* Sticky contact bar */
+#dock{position:fixed;left:16px;right:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;gap:8px;padding:8px;background:rgba(20,20,22,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px}
+#dock a{flex:1;text-align:center;padding:13px 0;font-size:14px;font-weight:600;border-radius:10px}
+#dock a.main{background:var(--accent);color:#1a1409}
+#dock a:active,.btn:active{transform:scale(.96)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,#hero h1 span,#hero .role,#hero .pitch,.cue{opacity:1;transform:none;filter:none}}
+</style>
+</head>
+<body>
+
+<!-- Desktop view: QR code only -->
+<div id="gate">
+  <h1>Vinayak Kamoji</h1>
+  <p>This page is made for phones. Scan the code to open it.</p>
+  <div id="qr"></div>
+</div>
+
+<div id="app">
+<div id="glow"><i></i><i></i><i></i><i></i></div>
+<div id="bar"></div>
+<main>
+
+<section id="hero">
+  <h1><span>Vinayak</span><span>Kamoji</span></h1>
+  <p class="role">Commercial Interior Designer</p>
+  <p class="pitch">I turn client briefs into commercial spaces that win the pitch.</p>
+  <div class="cue"><i></i>Scroll</div>
+</section>
+
+<section id="profile">
+  <h2 class="reveal">Profile</h2>
+  <p class="reveal d1">Senior Designer on the pitching team at Flipspaces, Bengaluru. I take a client brief through layouts, concepts, material palettes and photorealistic renders, then stay close to the project team so approved designs hold up on site.</p>
+  <p class="reveal d2" style="margin-top:14px">My background is full-cycle: client meetings, planning, drawings, procurement follow-up and site supervision.</p>
+  <div class="stats reveal d3">
+    <div class="stat"><b data-n="5" data-plus="1">0</b><span>years in interiors</span></div>
+    <div class="stat"><b data-n="6">0</b><span>commercial pitches won</span></div>
+    <div class="stat"><b data-n="47500">0</b><span>sq ft, largest project</span></div>
+    <div class="stat"><b>B.E.</b><span>Civil Engineering</span></div>
+  </div>
+</section>
+
+<section id="experience">
+  <h2 class="reveal">Experience</h2>
+  <div class="tl">
+    <div class="job reveal">
+      <h3>Senior Designer, Flipspaces</h3>
+      <div class="when">Aug 2025 to present, Bengaluru</div>
+      <ul>
+        <li>Part of the pitching team that turns client briefs into concepts, layouts and decks that win commercial projects.</li>
+        <li>Photorealistic renders and presentations that let clients see the finished space before approving.</li>
+        <li>Pitch decks with mood boards, material palettes and design stories.</li>
+        <li>Fast revisions from client feedback, and coordination with project managers and architects for site feasibility.</li>
+      </ul>
+    </div>
+    <div class="job reveal">
+      <h3>Interior Designer, Decorpot</h3>
+      <div class="when">Feb 2023 to Aug 2025, Bengaluru</div>
+      <ul>
+        <li>Client consultations turned into practical residential designs.</li>
+        <li>Managed revisions until approval, then prepared technical drawings and coordinated with production.</li>
+        <li>Ran multiple residential projects at once, on time and to quality standards.</li>
+      </ul>
+    </div>
+    <div class="job reveal">
+      <h3>Interior Designer, CETATI</h3>
+      <div class="when">Apr 2021 to Feb 2023, Bengaluru</div>
+      <ul>
+        <li>Led client meetings and owned residential and commercial projects end to end.</li>
+        <li>Prepared material specifications and drawings, and followed up with procurement.</li>
+        <li>Supervised site execution against the approved design.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2 class="reveal">Commercial projects won</h2>
+  <div class="track" id="track">
+    <!-- PROJECT IMAGES: create a folder named "images" next to index.html and add one .jpg per project with EXACTLY these names:
+         images/bellatrix-aerospace.jpg
+         images/wipro-electronics.jpg
+         images/sumadhura.jpg
+         images/elite-matrimony.jpg
+         images/66-degree-international.jpg
+         images/vigna-solutions.jpg
+       They load automatically. No code change needed. -->
+    <div class="card"><div class="slot" data-slot="bellatrix-aerospace">Bellatrix</div><div class="t"><h3>Bellatrix Aerospace</h3><p>Four-floor corporate office, 47,500 sq ft, Bengaluru.</p></div></div>
+    <div class="card"><div class="slot" data-slot="wipro-electronics">Wipro Electronics</div><div class="t"><h3>Wipro Electronics</h3><p>Commercial office interior.</p></div></div>
+    <div class="card"><div class="slot" data-slot="sumadhura">Sumadhura</div><div class="t"><h3>Sumadhura</h3><p>Commercial interior, 18,000 sq ft.</p></div></div>
+    <div class="card"><div class="slot" data-slot="elite-matrimony">Elite Matrimony</div><div class="t"><h3>Elite Matrimony</h3><p>Commercial office interior, 3,750 sq ft.</p></div></div>
+    <div class="card"><div class="slot" data-slot="66-degree-international">66 Degree International</div><div class="t"><h3>66 Degree International</h3><p>Commercial office interior, 3,500 sq ft.</p></div></div>
+    <div class="card"><div class="slot" data-slot="vigna-solutions">Vigna Solutions</div><div class="t"><h3>Vigna Solutions</h3><p>Commercial office interior, 2,353 sq ft.</p></div></div>
+  </div>
+  <div class="hint"><b>&rarr;</b> Swipe to see all six</div>
+</section>
+
+<section id="skills">
+  <h2 class="reveal">Skills</h2>
+  <div class="chips reveal d1">
+    <span class="chip">Space planning</span><span class="chip">Client pitching</span><span class="chip">Pitch decks</span><span class="chip">Material selection</span><span class="chip">Site coordination</span><span class="chip">Team leadership</span>
+  </div>
+  <div class="sub reveal">Tools</div>
+  <div class="chips reveal d1">
+    <span class="chip">SketchUp</span><span class="chip">3ds Max</span><span class="chip">V-Ray</span><span class="chip">AutoCAD</span><span class="chip">Revit</span><span class="chip">Photoshop</span>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="reveal">Education and contact</h2>
+  <div class="edu reveal"><b>B.E. Civil Engineering</b><span>Jain College of Engineering, Belgaum, 2019</span></div>
+  <div class="edu reveal"><b>Languages</b><span>English, Hindi, Kannada, Marathi</span></div>
+  <p class="reveal" style="margin-top:22px">Based in HSR Layout, Bengaluru. Open to a conversation about your next commercial project or team. Call or WhatsApp below.</p>
+  <div class="social reveal" style="flex-direction:column;gap:6px;margin-top:20px">
+    <span class="btn" style="text-align:left">+91 9108917701</span>
+    <span class="btn" style="text-align:left">kamojivinayak@yahoo.com</span>
+  </div>
+</section>
+
+</main>
+
+<nav id="dock">
+  <a class="main" href="tel:+919108917701">Call</a>
+  <a href="https://wa.me/919108917701" target="_blank" rel="noopener">WhatsApp</a>
+</nav>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+// QR target: leave empty to use this page's own address (works automatically on GitHub Pages).
+// Or paste your live link between the quotes, e.g. "https://yourname.github.io/cv/"
+var LIVE_URL = "";
+
+try{
+  if(window.QRCode){ new QRCode(document.getElementById('qr'),{text:LIVE_URL||location.href,width:168,height:168,correctLevel:QRCode.CorrectLevel.M}); }
+}catch(e){}
+
+document.querySelectorAll('.slot[data-slot]').forEach(function(sl){
+  var im=new Image(); im.alt=sl.dataset.slot.replace(/-/g,' ');
+  im.onload=function(){sl.textContent='';sl.appendChild(im)};
+  im.src='images/'+sl.dataset.slot+'.jpg';
+});
+
+function buzz(ms){ try{ if(navigator.vibrate) navigator.vibrate(ms); }catch(e){} }
+
+// Scroll reveals, counters, haptic tick per section
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll && e.target.querySelectorAll('[data-n]').forEach(count);
+    io.unobserve(e.target);
+  });
+},{threshold:.25});
+document.querySelectorAll('.reveal,.job').forEach(function(el){io.observe(el)});
+
+function count(el){
+  var n=+el.dataset.n,t0=null;
+  function f(t){ if(!t0)t0=t; var p=Math.min((t-t0)/1400,1),v=Math.round(n*(1-Math.pow(1-p,3)));
+    el.textContent=v.toLocaleString('en-IN')+(p===1&&el.dataset.plus?'+':''); if(p<1)requestAnimationFrame(f); }
+  requestAnimationFrame(f);
+}
+
+var secIO=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)buzz(8)})},{threshold:.6});
+document.querySelectorAll('section').forEach(function(s){secIO.observe(s)});
+
+// Progress bar
+addEventListener('scroll',function(){
+  var h=document.documentElement;
+  document.getElementById('bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+},{passive:true});
+
+// Haptics on taps and card swipes
+document.querySelectorAll('#dock a,.btn').forEach(function(a){a.addEventListener('click',function(){buzz(15)})});
+var lastCard=0;
+document.getElementById('track').addEventListener('scroll',function(){
+  var i=Math.round(this.scrollLeft/(this.firstElementChild.offsetWidth+14));
+  if(i!==lastCard){lastCard=i;buzz(8)}
+},{passive:true});
+</script>
+</body>
+</html>
